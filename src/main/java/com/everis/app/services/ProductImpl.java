@@ -5,6 +5,7 @@ import com.everis.app.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -28,10 +29,21 @@ public class ProductImpl implements IProductService {
 
     @Override
     public void update(int id, Producto objProd) {
-        Producto prodExt = prodRespos.findById(id).get();
+        Optional<Producto> op = prodRespos.findById(id);
+        op.map(prod -> {
+            prod.setNomProd(objProd.getNomProd());
+            prod.setPrecioProd(objProd.getPrecioProd());
+            return prodRespos.save(prod);
+        });
+                /*.orElseGet(() -> {
+            objProd.setIdProd(id);
+            return prodRespos.save(objProd);
+        });
+
+       /* Producto prodExt = prodRespos.findById(id).get();
         prodExt.setNomProd(objProd.getNomProd());
-        prodExt.setPrecioProd(objProd.getPrecioProd());
-        prodRespos.save(prodExt);
+        prodExt.setPrecioProd(objProd.getPrecioProd());*/
+        //prodRespos.save(prodExt);
     }
 
     @Override

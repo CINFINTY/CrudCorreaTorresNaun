@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.List;
 
@@ -31,7 +32,9 @@ public class ControllerProduct {
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Producto> deleteProduct(@PathVariable int id){
          servProd.deleteProduct(id);
-         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+         HttpHeaders head = new HttpHeaders();
+         head.add("Eliminar","Se elimino correctamente");
+         return new ResponseEntity<>(head,HttpStatus.NO_CONTENT);
     }
 
     /*Metodo para agregar un producto*/
@@ -39,7 +42,7 @@ public class ControllerProduct {
     public ResponseEntity<Producto> addProduct(@RequestBody Producto product){
         Producto prod = servProd.saveProduct(product);
         HttpHeaders cabecera = new HttpHeaders();
-        cabecera.add("Product","/product/add/"+product.getIdProd());
+        cabecera.add("Product","/add"+product.getIdProd());
         servProd.saveProduct(product);
         return new ResponseEntity<>(prod,cabecera, HttpStatus.CREATED);
     }

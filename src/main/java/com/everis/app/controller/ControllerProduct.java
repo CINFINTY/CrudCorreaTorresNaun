@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ControllerProduct {
     private final IProductService servProd;
-
+    //Injeccion por constructor
     @Autowired
      public ControllerProduct(IProductService servProd){this.servProd = servProd; }
 
@@ -32,8 +32,6 @@ public class ControllerProduct {
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<Producto> deleteProduct(@PathVariable int id){
          servProd.deleteProduct(id);
-         HttpHeaders head = new HttpHeaders();
-         head.add("Eliminar","Se elimino correctamente");
          return new ResponseEntity<>(head,HttpStatus.NO_CONTENT);
     }
 

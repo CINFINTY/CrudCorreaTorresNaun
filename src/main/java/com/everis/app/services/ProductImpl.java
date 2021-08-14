@@ -10,8 +10,9 @@ import java.util.Optional;
 
 @Service
 public class ProductImpl implements IProductService {
-
     private final IProductRepository prodRespos;
+
+    //Injecccion por constructor
     @Autowired
     public ProductImpl(IProductRepository prod) {this.prodRespos = prod;}
 
